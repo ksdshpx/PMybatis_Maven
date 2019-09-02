@@ -1,0 +1,8 @@
+
+\.idea/
+
+PMybatis_Maven\.iml
+
+target/classes/
+
+*.class
