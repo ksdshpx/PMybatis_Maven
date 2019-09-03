@@ -15,7 +15,12 @@
     </select>
 
     <!--public Employee getEmpById(Integer id);-->
+    <!--
     <select id="getEmpById" resultType="cn.ksdshpx.mybatis.beans.Employee">
+        select id,last_name as lastName,gender,email from tbl_employee where id = #{id}
+    </select>
+    -->
+    <select id="getEmpById" resultType="employee">
         select id,last_name as lastName,gender,email from tbl_employee where id = #{id}
     </select>
 </mapper>

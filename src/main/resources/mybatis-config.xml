@@ -16,6 +16,19 @@
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
+
+    <!--
+        3.typeAliases标签:别名处理器，可以为java类型取别名（别名不区分大小写）
+            type:指定要起别名的类的全类名，默认为类名小写
+            alias:指定别名
+            package:为某个包下的所有类起别名
+                批量起别名的情况下，可以使用@Alias注解为某个类型指定新的别名
+    -->
+    <typeAliases>
+        <typeAlias type="cn.ksdshpx.mybatis.beans.Employee" alias="employee"></typeAlias>
+        <!--批量起别名-->
+        <package name="cn.ksdshpx.mybatis.beans"/>
+    </typeAliases>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
