@@ -10,6 +10,12 @@
           url:引入网络路径或者磁盘路径下的资源
     -->
     <properties resource="dbconfig.properties"></properties>
+    <!--
+        2.settings标签：运行时行为设置
+    -->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>

@@ -9,11 +9,11 @@
         resultType:返回值类型
         #{id}:从传递过来的参数中取出id值
     -->
-    <!--
     <select id="selectEmp" resultType="cn.ksdshpx.mybatis.beans.Employee">
-        select id,last_name as lastName,gender,email from tbl_employee where id = #{id}
+        <!--select id,last_name as lastName,gender,email from tbl_employee where id = #{id}-->
+        select * from tbl_employee where id = #{id}
     </select>
-    -->
+
     <!--public Employee getEmpById(Integer id);-->
     <select id="getEmpById" resultType="cn.ksdshpx.mybatis.beans.Employee">
         select id,last_name as lastName,gender,email from tbl_employee where id = #{id}

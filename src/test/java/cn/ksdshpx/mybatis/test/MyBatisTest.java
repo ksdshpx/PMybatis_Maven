@@ -40,7 +40,7 @@ public class MyBatisTest {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
-            Employee employee = sqlSession.selectOne("cn.ksdshpx.mybatis.EmployeeMapper.selectEmp", 1);
+            Employee employee = sqlSession.selectOne("cn.ksdshpx.mybatis.mapper.EmployeeMapper.selectEmp", 1);
             System.out.println(employee);
         } finally {
             sqlSession.close();
