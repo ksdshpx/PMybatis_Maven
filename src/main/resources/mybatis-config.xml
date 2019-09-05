@@ -72,9 +72,29 @@
         <property name="SQL Server" value="sqlserver"/>
     </databaseIdProvider>
     <!--
-        将sql映射文件注册到全局配置文件中
+        6.mappers标签：将sql映射文件注册到全局配置文件中
     -->
     <mappers>
+        <!--
+            mapper:映射一个sql文件
+                1.注册配置文件
+                    resource:引用类路径下的sql映射文件
+                    url:引用网络路径或磁盘路径下的sql映射文件
+                2.注册接口
+                    class:引用接口
+                        1)有sql映射文件，映射文件必须与接口同名同包
+                        2)没有sql映射文件，所有的sql都是利用注解写在接口上
+                            推荐：比较重要复杂的Dao接口，使用sql映射文件
+                                 不重要简单的Dao接口为了开发快速可以使用注解
+        -->
         <mapper resource="EmployeeMapper.xml"/>
+        <!--
+        <mapper class="cn.ksdshpx.mybatis.mapper.EmployeeMapper"/>
+        <mapper class="cn.ksdshpx.mybatis.mapper.EmployeeMapperAnnotation"/>
+        -->
+        <!--
+        批量注册:映射文件必须与接口同名同包
+        <package name="cn.ksdshpx.mybatis.mapper"/>
+        -->
     </mappers>
 </configuration>

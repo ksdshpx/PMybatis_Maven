@@ -2,6 +2,7 @@ package cn.ksdshpx.mybatis.test;
 
 import cn.ksdshpx.mybatis.beans.Employee;
 import cn.ksdshpx.mybatis.mapper.EmployeeMapper;
+import cn.ksdshpx.mybatis.mapper.EmployeeMapperAnnotation;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -58,6 +59,25 @@ public class MyBatisTest {
         //3.获取接口的实例，MyBatis会自动创建接口的代理对象
         try {
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            System.out.println(mapper.getClass().getName());
+            Employee employee = mapper.getEmpById(1);
+            System.out.println(employee);
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testMapper() throws IOException {
+        //1.获取SqlSessionFactory对象
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        //2.通过SqlSessionFactory对象获取SqlSession对象
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        //3.获取接口的实例，MyBatis会自动创建接口的代理对象
+        try {
+            EmployeeMapperAnnotation mapper = sqlSession.getMapper(EmployeeMapperAnnotation.class);
             System.out.println(mapper.getClass().getName());
             Employee employee = mapper.getEmpById(1);
             System.out.println(employee);

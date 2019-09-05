@@ -10,5 +10,5 @@ import cn.ksdshpx.mybatis.beans.Employee;
  * Description:Employee映射接口
  */
 public interface EmployeeMapper {
-    public Employee getEmpById(Integer id);
+    Employee getEmpById(Integer id);
 }
