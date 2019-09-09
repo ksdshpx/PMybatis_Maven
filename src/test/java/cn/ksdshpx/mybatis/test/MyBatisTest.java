@@ -85,4 +85,32 @@ public class MyBatisTest {
             sqlSession.close();
         }
     }
+
+    @Test
+    public void testCRUD() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        //获取的sqlSession不自动提交数据
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+            //测试添加数据
+            //Employee employee = new Employee(null,"jerry","1","jerry@atguigu.com");
+            //mapper.addEmp(employee);
+
+            //测试修改数据
+            //Employee employee = new Employee(1,"hotcat","0","hotcat@atguigu.com");
+            //mapper.updateEmp(employee);
+
+            //测试删除数据
+            mapper.deleteEmpById(2);
+
+            //手动提交数据
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+    }
 }

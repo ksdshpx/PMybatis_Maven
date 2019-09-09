@@ -20,7 +20,7 @@
         <property name="configLocation" value="classpath:mybatis-spring.xml"/>
     </bean>
 
-    <!--声明MyBatis扫描器,使用MyBatis的动态代理,创建Dao接口的实现对象-->
+    <!--3.声明MyBatis扫描器,使用MyBatis的动态代理,创建Dao接口的实现对象-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--指定SqlSessionFactory-->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
@@ -28,7 +28,7 @@
         <property name="basePackage" value="cn.ksdshpx.mybatis.mapper"/>
     </bean>
 
-    <!--声明Service对象，并注入Dao对象-->
+    <!--4.声明Service对象，并注入Dao对象-->
     <bean id="studentService" class="cn.ksdshpx.mybatis.service.StudentServiceImpl">
         <property name="studentMapper" ref="studentMapper"/>
     </bean>
