@@ -9,7 +9,7 @@ import cn.ksdshpx.mybatis.beans.Employee;
  * Time: 13:31
  * Description:Employee映射接口
  *      MyBatis允许增删改直接定义一下类型的返回值
- *          int/Integer、long/Long、boolean/Boolean
+ *          int/Integer、long/Long、boolean/Boolean、void
  */
 public interface EmployeeMapper {
     Employee getEmpById(Integer id);
