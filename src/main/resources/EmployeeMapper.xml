@@ -55,11 +55,25 @@
                  #{指定的key}
                  key:使用@Param注解指定的值
                  value:参数的值
+
+            4.POJO:#{属性名}
+                如果多个参数正好是业务逻辑的数据模型，我们可以直接传入POJO
+
+            5.Map:#{key}
+                如果多个参数不是业务逻辑的数据模型，没有对应的POJO，不经常使用，我们可以传入一个Map
+
+            6.TO
+                如果多个参数不是业务逻辑的数据模型，但是经常要使用，推荐来编写一个数据传输对象TO(Transfer Object)
     -->
     <!--Employee getEmpByIdAndLastName(Integer id,String lastName);-->
     <select id="getEmpByIdAndLastName" resultType="cn.ksdshpx.mybatis.beans.Employee">
         <!--select id,last_name as lastName,gender,email from tbl_employee where id = #{param1} and last_name = #{param2}-->
         <!--select id,last_name as lastName,gender,email from tbl_employee where id = #{arg0} and last_name = #{arg1}-->
+        select id,last_name as lastName,gender,email from tbl_employee where id = #{id} and last_name = #{lastName}
+    </select>
+
+    <!--Employee getEmpByMap(Map map);-->
+    <select id="getEmpByMap" resultType="cn.ksdshpx.mybatis.beans.Employee">
         select id,last_name as lastName,gender,email from tbl_employee where id = #{id} and last_name = #{lastName}
     </select>
 </mapper>

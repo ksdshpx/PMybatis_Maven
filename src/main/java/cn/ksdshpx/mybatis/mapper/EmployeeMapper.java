@@ -3,6 +3,8 @@ package cn.ksdshpx.mybatis.mapper;
 import cn.ksdshpx.mybatis.beans.Employee;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Map;
+
 /**
  * Create with IntelliJ IDEA
  * Create by peng.xing
@@ -22,4 +24,6 @@ public interface EmployeeMapper {
     void deleteEmpById(Integer id);
 
     Employee getEmpByIdAndLastName(@Param("id") Integer id, @Param("lastName") String lastName);
+
+    Employee getEmpByMap(Map map);
 }

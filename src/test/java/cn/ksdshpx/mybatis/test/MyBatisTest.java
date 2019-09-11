@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Create with IntelliJ IDEA
@@ -124,7 +126,11 @@ public class MyBatisTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
-            Employee employee = mapper.getEmpByIdAndLastName(1, "hotcat");
+            //Employee employee = mapper.getEmpByIdAndLastName(1, "hotcat");
+            Map<String,Object> map = new HashMap<>();
+            map.put("id",1);
+            map.put("lastName","hotcat");
+            Employee employee = mapper.getEmpByMap(map);
             System.out.println(employee);
         } finally {
             sqlSession.close();
