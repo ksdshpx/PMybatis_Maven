@@ -1,6 +1,7 @@
 package cn.ksdshpx.mybatis.mapper;
 
 import cn.ksdshpx.mybatis.beans.Employee;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * Create with IntelliJ IDEA
@@ -19,4 +20,6 @@ public interface EmployeeMapper {
     void updateEmp(Employee employee);
 
     void deleteEmpById(Integer id);
+
+    Employee getEmpByIdAndLastName(@Param("id") Integer id, @Param("lastName") String lastName);
 }

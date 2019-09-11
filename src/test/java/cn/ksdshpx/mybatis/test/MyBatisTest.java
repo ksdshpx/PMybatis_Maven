@@ -114,4 +114,20 @@ public class MyBatisTest {
             sqlSession.close();
         }
     }
+
+    @Test
+    public void testMultiParam() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        //获取的sqlSession不自动提交数据
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            Employee employee = mapper.getEmpByIdAndLastName(1, "hotcat");
+            System.out.println(employee);
+        } finally {
+            sqlSession.close();
+        }
+    }
 }
