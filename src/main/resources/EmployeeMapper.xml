@@ -46,6 +46,10 @@
         MyBatis参数处理：
             1.单个参数：mybatis不会做特殊处理
                 #{参数名}，取出参数值
+                特别注意，如果是Collection(List或Set)或数组类型，也会做特殊处理，
+                将传入的集合或数组封装到Map中。
+                key:Collection为collection,List为list,数组为array
+
 
             2.多个参数：mybatis会做特殊处理
                 #{param1}..#{paramN}或#{arg0}..#{argn}
