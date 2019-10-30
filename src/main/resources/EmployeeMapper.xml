@@ -11,7 +11,7 @@
     -->
     <select id="selectEmp" resultType="cn.ksdshpx.mybatis.beans.Employee">
         <!--select id,last_name as lastName,gender,email from tbl_employee where id = #{id}-->
-        select * from tbl_employee where id = #{id}
+        SELECT * FROM tbl_employee WHERE id = #{id}
     </select>
 
     <!--public Employee getEmpById(Integer id);-->
@@ -21,7 +21,9 @@
     </select>
     -->
     <select id="getEmpById" resultType="employee" databaseId="mysql">
-        select id,last_name as lastName,gender,email from tbl_employee where id = #{id}
+        SELECT id, last_name AS lastName, gender, email
+        FROM tbl_employee
+        WHERE id = #{id}
     </select>
 
     <!--void addEmp(Employee employee);-->
@@ -31,16 +33,43 @@
         useGeneratedKeys="true":获取自增主键值策略
         keyProperty:指定对应的主键属性，也就是mybatis获取到主键值以后，将这个值封装给JavaBean的哪个属性
     -->
-    <insert id="addEmp" parameterType="cn.ksdshpx.mybatis.beans.Employee" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO tbl_employee (last_name, gender, email) VALUES (#{lastName}, #{gender}, #{email})
+    <insert id="addEmp" parameterType="cn.ksdshpx.mybatis.beans.Employee" useGeneratedKeys="true" keyProperty="id"
+            databaseId="mysql">
+        INSERT INTO tbl_employee (last_name, gender, email)
+        VALUES (#{lastName}, #{gender}, #{email})
     </insert>
+
+    <!--
+        oracle不支持自增，使用序列来模拟自增；
+        每次插入的数据的主键是从序列中拿到的值，如何获取这个值
+    -->
+    <insert id="addEmp" databaseId="oralce">
+        <!--
+            keyProperty:查出的主键封装给javabean的哪个属性
+            order="BEFORE":当前sql在插入sql之前运行
+            resultType:查出数据的返回值类型
+        -->
+        <selectKey keyProperty="id" order="BEFORE" resultType="Integer">
+            <!--编写查询主键的sql-->
+            SELECT employee_seq.nextval from dual
+        </selectKey>
+        INSERT INTO tbl_employee (id,last_name, gender, email)
+        VALUES (#{id},#{lastName}, #{gender}, #{email})
+    </insert>
+
     <!--void updateEmp(Employee employee);-->
     <update id="updateEmp">
-        UPDATE tbl_employee SET last_name = #{lastName},gender = #{gender},email = #{email} WHERE id = #{id}
+        UPDATE tbl_employee
+        SET last_name = #{lastName},
+            gender    = #{gender},
+            email     = #{email}
+        WHERE id = #{id}
     </update>
     <!--void deleteEmpById(Integer id);-->
     <delete id="deleteEmpById">
-        DELETE FROM tbl_employee WHERE id = #{id}
+        DELETE
+        FROM tbl_employee
+        WHERE id = #{id}
     </delete>
     <!--
         MyBatis参数处理：
@@ -73,11 +102,14 @@
     <select id="getEmpByIdAndLastName" resultType="cn.ksdshpx.mybatis.beans.Employee">
         <!--select id,last_name as lastName,gender,email from tbl_employee where id = #{param1} and last_name = #{param2}-->
         <!--select id,last_name as lastName,gender,email from tbl_employee where id = #{arg0} and last_name = #{arg1}-->
-        select id,last_name as lastName,gender,email from tbl_employee where id = #{id} and last_name = #{lastName}
-    </select>
+        SELECT id,last_name AS lastName,gender,email FROM tbl_employee WHERE id = #{id} AND last_name = #{lastName}
+</select>
 
     <!--Employee getEmpByMap(Map map);-->
     <select id="getEmpByMap" resultType="cn.ksdshpx.mybatis.beans.Employee">
-        select id,last_name as lastName,gender,email from tbl_employee where id = #{id} and last_name = #{lastName}
+        SELECT id, last_name AS lastName, gender, email
+        FROM tbl_employee
+        WHERE id = #{id}
+          AND last_name = #{lastName}
     </select>
 </mapper>
