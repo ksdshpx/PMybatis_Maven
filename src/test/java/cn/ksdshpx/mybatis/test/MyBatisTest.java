@@ -3,6 +3,7 @@ package cn.ksdshpx.mybatis.test;
 import cn.ksdshpx.mybatis.beans.Employee;
 import cn.ksdshpx.mybatis.mapper.EmployeeMapper;
 import cn.ksdshpx.mybatis.mapper.EmployeeMapperAnnotation;
+import cn.ksdshpx.mybatis.mapper.EmployeeMapperPlus;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -168,6 +169,22 @@ public class MyBatisTest {
             //Map<String, Object> map = mapper.getEmpByIdReturnMap(1);
             Map<Integer, Employee> map = mapper.getEmpByLastNameLikeReturnMap("%a%");
             System.out.println(map);
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testSelectResultMap() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        //获取的sqlSession不自动提交数据
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            EmployeeMapperPlus mapper = sqlSession.getMapper(EmployeeMapperPlus.class);
+            Employee emp = mapper.getEmpById(1);
+            System.out.println(emp);
         } finally {
             sqlSession.close();
         }

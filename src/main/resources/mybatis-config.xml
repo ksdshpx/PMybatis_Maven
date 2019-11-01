@@ -89,6 +89,7 @@
                                  不重要简单的Dao接口为了开发快速可以使用注解
         -->
         <mapper resource="EmployeeMapper.xml"/>
+        <mapper resource="EmployeeMapperPlus.xml"/>
         <!--
         <mapper class="cn.ksdshpx.mybatis.mapper.EmployeeMapper"/>
         <mapper class="cn.ksdshpx.mybatis.mapper.EmployeeMapperAnnotation"/>

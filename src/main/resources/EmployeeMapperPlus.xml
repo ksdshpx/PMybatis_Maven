@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ksdshpx.mybatis.mapper.EmployeeMapperPlus">
+    <!--
+        自定义某个JavaBean的封装规则
+        type:自定义规则java类型
+        id:唯一标识，方便引用
+    -->
+    <resultMap id="MyEmp" type="cn.ksdshpx.mybatis.beans.Employee">
+        <!--
+            指定主键列的封装规则,id定义主键底层有优化规则
+            column:指定哪一列
+            property:指定对应的java属性
+        -->
+        <id column="id" property="id"/>
+        <!--定义普通列封装规则-->
+        <result column="last_name" property="lastName"/>
+        <!--
+            其他不指定的列会自动封装,但是推荐只要写resultMap就把全列的封装规则都写上
+         -->
+        <result column="email" property="email"/>
+        <result column="gender" property="gender"/>
+    </resultMap>
+    <!--
+        resultMap:自定义结果集映射规则
+    -->
+    <!--Employee getEmpById(Integer id);-->
+    <select id="getEmpById" resultMap="MyEmp">
+        SELECT *
+        FROM tbl_employee
+        WHERE id = #{id}
+    </select>
+</mapper>
