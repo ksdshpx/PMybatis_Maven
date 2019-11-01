@@ -12,6 +12,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -132,6 +133,24 @@ public class MyBatisTest {
             //map.put("lastName","hotcat");
             //Employee employee = mapper.getEmpByMap(map);
             System.out.println(employee);
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testSelect() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        //获取的sqlSession不自动提交数据
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            List<Employee> emps = mapper.getEmpsByLastNameLike("%a%");
+            for (Employee emp : emps) {
+                System.out.println(emp);
+            }
         } finally {
             sqlSession.close();
         }

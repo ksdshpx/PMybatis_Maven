@@ -3,6 +3,7 @@ package cn.ksdshpx.mybatis.mapper;
 import cn.ksdshpx.mybatis.beans.Employee;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,4 +27,6 @@ public interface EmployeeMapper {
     Employee getEmpByIdAndLastName(@Param("id") Integer id, @Param("lastName") String lastName);
 
     Employee getEmpByMap(Map map);
+
+    List<Employee> getEmpsByLastNameLike(String lastName);
 }
