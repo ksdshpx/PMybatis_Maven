@@ -31,8 +31,8 @@ public class MyBatisTest {
      * 4.写代码
      * 1）根据全局配置文件得到SqlSessionFactory
      * 2）使用SqlSessionFactory获取SqlSeesion对象，使用它来执行sql语句，
-     *    一个SqlSession代表和数据库的一次会话，用完需要关闭,SqlSession对象和Connection一样都是非线程安全的,
-     *    每次使用都应该获取新的对象
+     * 一个SqlSession代表和数据库的一次会话，用完需要关闭,SqlSession对象和Connection一样都是非线程安全的,
+     * 每次使用都应该获取新的对象
      * 3）使用sql的唯一标识告诉MyBatis执行哪个sql,sql都是保存在sql映射文件中
      *
      * @throws IOException
@@ -100,7 +100,7 @@ public class MyBatisTest {
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
 
             //测试添加数据
-            Employee employee = new Employee(null,"tom","0","tom@atguigu.com");
+            Employee employee = new Employee(null, "tom", "0", "tom@atguigu.com");
             mapper.addEmp(employee);
             System.out.println(employee.getId());
 
@@ -151,6 +151,23 @@ public class MyBatisTest {
             for (Employee emp : emps) {
                 System.out.println(emp);
             }
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testSelectMap() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        //获取的sqlSession不自动提交数据
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            //Map<String, Object> map = mapper.getEmpByIdReturnMap(1);
+            Map<Integer, Employee> map = mapper.getEmpByLastNameLikeReturnMap("%a%");
+            System.out.println(map);
         } finally {
             sqlSession.close();
         }

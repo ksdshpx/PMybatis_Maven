@@ -192,6 +192,22 @@
         resultType:如果返回的是一个集合，要写集合中元素的类型
     -->
     <select id="getEmpsByLastNameLike" resultType="Employee">
-        select * from tbl_employee where last_name like #{lastName}
+        SELECT *
+        FROM tbl_employee
+        WHERE last_name LIKE #{lastName}
+    </select>
+
+    <!--Map<String,Object> getEmpByIdReturnMap(Integer id);-->
+    <select id="getEmpByIdReturnMap" resultType="map">
+        SELECT *
+        FROM tbl_employee
+        WHERE id = #{id}
+    </select>
+
+    <!--Map<Integer,Employee> getEmpByLastNameLikeReturnMap(String lastName);-->
+    <select id="getEmpByLastNameLikeReturnMap" resultType="Employee">
+        SELECT *
+        FROM tbl_employee
+        WHERE last_name LIKE #{lastName}
     </select>
 </mapper>
