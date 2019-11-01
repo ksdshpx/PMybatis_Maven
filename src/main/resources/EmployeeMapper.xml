@@ -160,4 +160,17 @@
           }
 
     -->
+    <!--
+        参数值的获取：
+            #{}：可以获取map中的值或者POJO对象属性的值
+            ${}：可以获取map中的值或者POJO对象属性的值
+                区别：#{}以预编译的形式将参数设置到sql语句中;PreparedStatement;防止sql注入
+                     ${}取出的值直接拼装在sql语句中;会有sql注入问题
+
+                结论：大多情况下取参数的值都应该使用#{}
+                     对于原生jdbc不支持占位符的地方，就可以使用${}进行取值
+                     比如分表、排序;按照年份分表拆分
+                        select * from ${year}_salary where xxx;
+                        select * from tbl_employee order by ${f_name} ${order}
+    -->
 </mapper>
