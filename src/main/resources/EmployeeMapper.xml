@@ -172,5 +172,18 @@
                      比如分表、排序;按照年份分表拆分
                         select * from ${year}_salary where xxx;
                         select * from tbl_employee order by ${f_name} ${order}
+
+        #{}:更丰富的用法
+            规定参数的一些规则
+            javaType、jdbcType、mode（存储过程）、numericScale、
+            resultMap、typeHandler、jdbcTypeName、expression（未来准备支持的功能）
+
+            jdbcType：通常在某种特定的条件下需要被设置
+                在数据为null的时候，有些数据库不能识别MyBatis对null的默认处理，比如Oracle(报错)
+                JdbcType OTHER:无效的类型，因为MyBatis对所有的null都映射的原生Jdbc的OTHER类型，oracle不能正确识别
+
+                由于全局配置中：jdbcTypeForNull=OTHER,oracle不支持
+                解决：1、#{字段,jdbcType=NULL}
+                     2、jdbcTypeForNull=NULL
     -->
 </mapper>
