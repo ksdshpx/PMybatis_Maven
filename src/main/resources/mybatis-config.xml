@@ -16,6 +16,7 @@
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
         <setting name="jdbcTypeForNull" value="NULL"/>
+        <setting name="logImpl" value="STDOUT_LOGGING" />
     </settings>
 
     <!--
@@ -90,6 +91,7 @@
         -->
         <mapper resource="EmployeeMapper.xml"/>
         <mapper resource="EmployeeMapperPlus.xml"/>
+        <mapper resource="DepartmentMapper.xml"/>
         <!--
         <mapper class="cn.ksdshpx.mybatis.mapper.EmployeeMapper"/>
         <mapper class="cn.ksdshpx.mybatis.mapper.EmployeeMapperAnnotation"/>

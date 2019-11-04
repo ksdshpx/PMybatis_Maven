@@ -61,6 +61,34 @@
             <result column="dept_name" property="deptName"/>
         </association>
     </resultMap>
+
+    <!--
+        使用association进行分步查询:
+            1.先按照员工id查询员工信息
+            2.根据查询出的员工信息中的d_id去部门表查出部门信息
+            3.部门设置到员工中
+    -->
+    <resultMap id="MyEmpStep" type="cn.ksdshpx.mybatis.beans.Employee">
+        <id column="id" property="id"/>
+        <result column="last_name" property="lastName"/>
+        <result column="gender" property="gender"/>
+        <result column="email" property="email"/>
+        <!--
+            association:定义关联对象的封装规则
+            select:表明当前属性是调用select指定的方法查出的结果
+            column:指定将哪一列的值传给这个方法
+        -->
+        <association property="dept" select="cn.ksdshpx.mybatis.mapper.DepartmentMapper.getDeptById" column="d_id">
+
+        </association>
+    </resultMap>
+    <!--Employee getEmpByIdStep(Integer id);-->
+    <select id="getEmpByIdStep" resultMap="MyEmpStep">
+        SELECT *
+        FROM tbl_employee
+        WHERE id = #{id}
+    </select>
+
     <!--
         场景：查询Employee的同时查询出员工对应的部门
     -->
