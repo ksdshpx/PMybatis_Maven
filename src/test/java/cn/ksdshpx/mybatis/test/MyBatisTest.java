@@ -186,7 +186,8 @@ public class MyBatisTest {
             //Employee emp = mapper.getEmpById(1);
             //Employee emp = mapper.getEmpAndDeptById(1);
             Employee emp = mapper.getEmpByIdStep(1);
-            System.out.println(emp);
+            //System.out.println(emp);
+            //System.out.println(emp.getDept());
             System.out.println(emp.getDept());
         } finally {
             sqlSession.close();

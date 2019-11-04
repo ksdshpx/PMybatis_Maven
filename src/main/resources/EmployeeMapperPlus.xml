@@ -63,6 +63,23 @@
     </resultMap>
 
     <!--
+        场景：查询Employee的同时查询出员工对应的部门
+    -->
+    <!--Employee getEmpAndDeptById(Integer id);-->
+    <select id="getEmpAndDeptById" resultMap="MyEmp3">
+        SELECT e.`id`        AS id,
+               e.`last_name` AS last_name,
+               e.`gender`    AS gender,
+               e.`email`     AS email,
+               d.`id`        AS did,
+               d.`dept_name` AS dept_name
+        FROM tbl_employee e,
+             tbl_dept d
+        WHERE e.`d_id` = d.`id`
+          AND e.`id` = #{id}
+    </select>
+
+    <!--
         使用association进行分步查询:
             1.先按照员工id查询员工信息
             2.根据查询出的员工信息中的d_id去部门表查出部门信息
@@ -90,19 +107,10 @@
     </select>
 
     <!--
-        场景：查询Employee的同时查询出员工对应的部门
+        可以使用延迟加载：
+            Employee===>Deparment
+            我们每次查询Employee对象的时候，都将Department一起查询出来
+            部门信息在使用的时候再去查询出来
+            分步查询的基础之上加上两个配置，就能完成延迟加载
     -->
-    <!--Employee getEmpAndDeptById(Integer id);-->
-    <select id="getEmpAndDeptById" resultMap="MyEmp3">
-        SELECT e.`id`        AS id,
-               e.`last_name` AS last_name,
-               e.`gender`    AS gender,
-               e.`email`     AS email,
-               d.`id`        AS did,
-               d.`dept_name` AS dept_name
-        FROM tbl_employee e,
-             tbl_dept d
-        WHERE e.`d_id` = d.`id`
-          AND e.`id` = #{id}
-    </select>
 </mapper>
