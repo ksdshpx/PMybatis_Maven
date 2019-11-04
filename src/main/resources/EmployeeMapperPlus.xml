@@ -44,11 +44,28 @@
         <result column="did" property="dept.id"/>
         <result column="dept_name" property="dept.deptName"/>
     </resultMap>
+
+    <!--使用association来定义单个对象的封装规则-->
+    <resultMap id="MyEmp3" type="cn.ksdshpx.mybatis.beans.Employee">
+        <id column="id" property="id"/>
+        <result column="last_name" property="lastName"/>
+        <result column="gender" property="gender"/>
+        <result column="email" property="email"/>
+        <!--
+            可以指定联合的JavaBean对象,
+                property:指定哪个属性是联合的对象
+                javaType:指定这个属性对象的类型（不能省略）
+        -->
+        <association property="dept" javaType="cn.ksdshpx.mybatis.beans.Department">
+            <id column="did" property="id"/>
+            <result column="dept_name" property="deptName"/>
+        </association>
+    </resultMap>
     <!--
         场景：查询Employee的同时查询出员工对应的部门
     -->
     <!--Employee getEmpAndDeptById(Integer id);-->
-    <select id="getEmpAndDeptById" resultMap="MyEmp2">
+    <select id="getEmpAndDeptById" resultMap="MyEmp3">
         SELECT e.`id`        AS id,
                e.`last_name` AS last_name,
                e.`gender`    AS gender,
