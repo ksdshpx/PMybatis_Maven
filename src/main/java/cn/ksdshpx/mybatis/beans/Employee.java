@@ -12,6 +12,7 @@ public class Employee {
     private String lastName;
     private String gender;
     private String email;
+    private Department dept;
 
     public Employee() {
     }
@@ -55,6 +56,14 @@ public class Employee {
         this.email = email;
     }
 
+    public Department getDept() {
+        return dept;
+    }
+
+    public void setDept(Department dept) {
+        this.dept = dept;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -62,6 +71,7 @@ public class Employee {
                 ", lastName='" + lastName + '\'' +
                 ", gender='" + gender + '\'' +
                 ", email='" + email + '\'' +
+                ", dept=" + dept +
                 '}';
     }
 }

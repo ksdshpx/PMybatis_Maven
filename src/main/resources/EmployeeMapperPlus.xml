@@ -32,4 +32,32 @@
         FROM tbl_employee
         WHERE id = #{id}
     </select>
+
+    <!--
+        关联查询：级联属性封装结果集
+    -->
+    <resultMap id="MyEmp2" type="cn.ksdshpx.mybatis.beans.Employee">
+        <id column="id" property="id"/>
+        <result column="last_name" property="lastName"/>
+        <result column="gender" property="gender"/>
+        <result column="email" property="email"/>
+        <result column="did" property="dept.id"/>
+        <result column="dept_name" property="dept.deptName"/>
+    </resultMap>
+    <!--
+        场景：查询Employee的同时查询出员工对应的部门
+    -->
+    <!--Employee getEmpAndDeptById(Integer id);-->
+    <select id="getEmpAndDeptById" resultMap="MyEmp2">
+        SELECT e.`id`        AS id,
+               e.`last_name` AS last_name,
+               e.`gender`    AS gender,
+               e.`email`     AS email,
+               d.`id`        AS did,
+               d.`dept_name` AS dept_name
+        FROM tbl_employee e,
+             tbl_dept d
+        WHERE e.`d_id` = d.`id`
+          AND e.`id` = #{id}
+    </select>
 </mapper>
