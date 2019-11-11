@@ -1,6 +1,8 @@
 package cn.ksdshpx.mybatis.test;
 
+import cn.ksdshpx.mybatis.beans.Department;
 import cn.ksdshpx.mybatis.beans.Employee;
+import cn.ksdshpx.mybatis.mapper.DepartmentMapper;
 import cn.ksdshpx.mybatis.mapper.EmployeeMapper;
 import cn.ksdshpx.mybatis.mapper.EmployeeMapperAnnotation;
 import cn.ksdshpx.mybatis.mapper.EmployeeMapperPlus;
@@ -189,6 +191,22 @@ public class MyBatisTest {
             //System.out.println(emp);
             //System.out.println(emp.getDept());
             System.out.println(emp.getDept());
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testResultMapCollection() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        //获取的sqlSession不自动提交数据
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            DepartmentMapper mapper = sqlSession.getMapper(DepartmentMapper.class);
+            Department dept = mapper.getDeptByIdPlus(1);
+            System.out.println(dept);
         } finally {
             sqlSession.close();
         }

@@ -1,5 +1,7 @@
 package cn.ksdshpx.mybatis.beans;
 
+import java.util.List;
+
 /**
  * Create with IntelliJ IDEA
  * Create by peng.xing
@@ -10,6 +12,7 @@ package cn.ksdshpx.mybatis.beans;
 public class Department {
     private Integer id;
     private String deptName;
+    private List<Employee> emps;
 
     public Integer getId() {
         return id;
@@ -27,11 +30,20 @@ public class Department {
         this.deptName = deptName;
     }
 
+    public List<Employee> getEmps() {
+        return emps;
+    }
+
+    public void setEmps(List<Employee> emps) {
+        this.emps = emps;
+    }
+
     @Override
     public String toString() {
         return "Department{" +
                 "id=" + id +
                 ", deptName='" + deptName + '\'' +
+                ", emps=" + emps +
                 '}';
     }
 }

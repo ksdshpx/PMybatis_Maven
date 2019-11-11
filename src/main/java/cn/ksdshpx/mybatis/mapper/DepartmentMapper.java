@@ -11,4 +11,5 @@ import cn.ksdshpx.mybatis.beans.Department;
  */
 public interface DepartmentMapper {
     Department getDeptById(Integer id);
+    Department getDeptByIdPlus(Integer id);
 }

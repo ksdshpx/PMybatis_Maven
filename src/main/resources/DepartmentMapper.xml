@@ -9,4 +9,28 @@
         FROM tbl_dept
         WHERE id = #{id}
     </select>
+
+    <resultMap id="MyDept" type="cn.ksdshpx.mybatis.beans.Department">
+        <id column="did" property="id"/>
+        <result column="dept_name" property="deptName"/>
+        <!--
+            collection:定义关联的集合类型的属性的封装规则
+            ofType:指定集合里面元素的类型
+        -->
+        <collection property="emps" ofType="cn.ksdshpx.mybatis.beans.Employee">
+            <!--定义集合中元素的封装规则-->
+            <id column="eid" property="id"/>
+            <result column="last_name" property="lastName"/>
+            <result column="email" property="email"/>
+            <result column="gender" property="gender"/>
+        </collection>
+    </resultMap>
+    <!--public Department getDeptByIdPlus(Integer id);-->
+    <select id="getDeptByIdPlus" resultMap="MyDept">
+        SELECT d.`id` AS did, d.`dept_name`, e.`id` AS eid, e.`last_name`, e.`email`, e.`gender`
+        FROM tbl_dept d
+                 LEFT JOIN tbl_employee e
+                           ON d.`id` = e.`d_id`
+        WHERE d.`id` = #{id}
+    </select>
 </mapper>
