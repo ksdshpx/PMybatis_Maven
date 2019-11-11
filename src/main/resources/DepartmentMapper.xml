@@ -38,14 +38,20 @@
     <resultMap id="MyDeptStep" type="cn.ksdshpx.mybatis.beans.Department">
         <id column="id" property="id"/>
         <result column="dept_name" property="deptName"/>
-        <collection property="emps" select="cn.ksdshpx.mybatis.mapper.EmployeeMapperPlus.getEmpsByDeptId" column="id">
+        <collection property="emps" select="cn.ksdshpx.mybatis.mapper.EmployeeMapperPlus.getEmpsByDeptId" column="id" fetchType="lazy">
 
         </collection>
     </resultMap>
     <!--public Department getDeptByIdStep(Integer id);-->
     <select id="getDeptByIdStep" resultMap="MyDeptStep">
-        SELECT id, dept_name AS deptName
+        SELECT id, dept_name
         FROM tbl_dept
         WHERE id = #{id}
     </select>
+
+    <!--
+        扩展：分步查询，条件传递多列的值
+        将多列的值封装map传递，column="{key1=列1,key2=列2}"
+        fetchType="lazy":默认为lazy,表示使用懒加载,eager表示立即加载
+    -->
 </mapper>
