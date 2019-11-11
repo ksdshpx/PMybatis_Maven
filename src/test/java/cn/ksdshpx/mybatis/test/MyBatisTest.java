@@ -197,7 +197,7 @@ public class MyBatisTest {
     }
 
     @Test
-    public void testResultMapCollection() throws IOException {
+    public void testResultMapCollectionStep() throws IOException {
         String resource = "mybatis-config.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
@@ -205,10 +205,12 @@ public class MyBatisTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
             DepartmentMapper mapper = sqlSession.getMapper(DepartmentMapper.class);
-            Department dept = mapper.getDeptByIdPlus(1);
-            System.out.println(dept);
+            Department dept = mapper.getDeptByIdStep(1);
+            System.out.println(dept.getDeptName());
+            //System.out.println(dept.getEmps());
         } finally {
             sqlSession.close();
         }
     }
+
 }

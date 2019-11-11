@@ -10,6 +10,7 @@
         WHERE id = #{id}
     </select>
 
+    <!--嵌套结果集的方式，使用collection标签定义关联的集合类型的属性的封装规则-->
     <resultMap id="MyDept" type="cn.ksdshpx.mybatis.beans.Department">
         <id column="did" property="id"/>
         <result column="dept_name" property="deptName"/>
@@ -32,5 +33,19 @@
                  LEFT JOIN tbl_employee e
                            ON d.`id` = e.`d_id`
         WHERE d.`id` = #{id}
+    </select>
+
+    <resultMap id="MyDeptStep" type="cn.ksdshpx.mybatis.beans.Department">
+        <id column="id" property="id"/>
+        <result column="dept_name" property="deptName"/>
+        <collection property="emps" select="cn.ksdshpx.mybatis.mapper.EmployeeMapperPlus.getEmpsByDeptId" column="id">
+
+        </collection>
+    </resultMap>
+    <!--public Department getDeptByIdStep(Integer id);-->
+    <select id="getDeptByIdStep" resultMap="MyDeptStep">
+        SELECT id, dept_name AS deptName
+        FROM tbl_dept
+        WHERE id = #{id}
     </select>
 </mapper>

@@ -2,6 +2,8 @@ package cn.ksdshpx.mybatis.mapper;
 
 import cn.ksdshpx.mybatis.beans.Employee;
 
+import java.util.List;
+
 /**
  * Create with IntelliJ IDEA
  * Create by peng.xing
@@ -15,4 +17,6 @@ public interface EmployeeMapperPlus {
     Employee getEmpAndDeptById(Integer id);
 
     Employee getEmpByIdStep(Integer id);
+
+    List<Employee> getEmpsByDeptId(Integer deptId);
 }
