@@ -100,7 +100,7 @@
         </association>
     </resultMap>
     <!--Employee getEmpByIdStep(Integer id);-->
-    <select id="getEmpByIdStep" resultMap="MyEmpStep">
+    <select id="getEmpByIdStep" resultMap="MyEmpDis">
         SELECT *
         FROM tbl_employee
         WHERE id = #{id}
@@ -125,4 +125,40 @@
         FROM tbl_employee
         WHERE d_id = #{deptId}
     </select>
+
+    <!--
+         <discriminator javaType="">
+            <case value=""></case>
+        </discriminator>
+        discriminator:鉴别器,MyBatis可以使用discriminator判断某列的值，然后根据某列的值改变封装行为
+        封装Employee:
+            如果查出的是女生，就把部门信息查询出来，否则不查出
+            如果查出的是男生，就把last_name赋值给email
+    -->
+    <resultMap id="MyEmpDis" type="cn.ksdshpx.mybatis.beans.Employee">
+        <id column="id" property="id"/>
+        <result column="last_name" property="lastName"/>
+        <result column="gender" property="gender"/>
+        <result column="email" property="email"/>
+        <!--
+            column:指定要判断的列
+            javaType:列对应的java类型
+        -->
+        <discriminator javaType="string" column="gender">
+            <!--女生-->
+            <case value="0" resultType="cn.ksdshpx.mybatis.beans.Employee">
+                <association property="dept" select="cn.ksdshpx.mybatis.mapper.DepartmentMapper.getDeptById" column="d_id">
+
+                </association>
+            </case>
+            <!--男生-->
+            <case value="1" resultType="cn.ksdshpx.mybatis.beans.Employee">
+                <id column="id" property="id"/>
+                <result column="last_name" property="lastName"/>
+                <result column="gender" property="gender"/>
+                <result column="last_name" property="email"/>
+            </case>
+        </discriminator>
+
+    </resultMap>
 </mapper>

@@ -213,4 +213,20 @@ public class MyBatisTest {
         }
     }
 
+    @Test
+    public void testResultMapDis() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        //获取的sqlSession不自动提交数据
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            EmployeeMapperPlus mapper = sqlSession.getMapper(EmployeeMapperPlus.class);
+            Employee employee = mapper.getEmpByIdStep(1);
+            System.out.println(employee);
+        } finally {
+            sqlSession.close();
+        }
+    }
+
 }
