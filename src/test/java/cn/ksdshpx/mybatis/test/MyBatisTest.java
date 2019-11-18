@@ -236,7 +236,7 @@ public class MyBatisTest {
         try {
             EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
             //Employee employee = new Employee(1,"hotcat","1","hotcat@atguigu.com");
-            Employee employee = new Employee(1,"hotcat","1",null);
+            Employee employee = new Employee(null,"%t%","1",null);
             List<Employee> emps = mapper.getEmpsByConditionIf(employee);
             for (Employee emp : emps) {
                 System.out.println(emp);

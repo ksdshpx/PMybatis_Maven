@@ -10,21 +10,27 @@
     <select id="getEmpsByConditionIf" resultType="cn.ksdshpx.mybatis.beans.Employee">
         SELECT *
         FROM tbl_employee
-        WHERE
         <!--
-          test:判断表达式（OGNL）,从参数中取值进行判断
+            查询的时候如果某个条件没带，可能会sql拼装有问题
+            1.给where后面加上1=1，以后的条件都and xxx
+            2.MyBatis使用where标签来将所有的查询条件包括在内。where只会去掉第一个多出来的and或or
         -->
-        <if test="id!=null">
-            id = #{id}
-        </if>
-        <if test="lastName != null &amp;&amp; lastName != &quot;&quot;">
-            AND last_name LIKE #{lastName}
-        </if>
-        <if test="email != null and email.trim() != ''">
-            AND email = #{email}
-        </if>
-        <if test="gender == 0 or gender == 1">
-            AND gender = #{gender}
-        </if>
+        <where>
+            <!--
+              test:判断表达式（OGNL）,从参数中取值进行判断
+            -->
+            <if test="id!=null">
+                id = #{id}
+            </if>
+            <if test="lastName != null &amp;&amp; lastName != &quot;&quot;">
+                AND last_name LIKE #{lastName}
+            </if>
+            <if test="email != null and email.trim() != ''">
+                AND email = #{email}
+            </if>
+            <if test="gender == 0 or gender == 1">
+                AND gender = #{gender}
+            </if>
+        </where>
     </select>
 </mapper>
