@@ -1,5 +1,9 @@
 package cn.ksdshpx.mybatis.mapper;
 
+import cn.ksdshpx.mybatis.beans.Employee;
+
+import java.util.List;
+
 /**
  * Create with IntelliJ IDEA
  * Create by peng.xing
@@ -8,5 +12,6 @@ package cn.ksdshpx.mybatis.mapper;
  * Description:动态SQL的Mapper接口
  */
 public interface EmployeeMapperDynamicSQL {
-
+    //携带了哪个字段，查询条件就带上这个字段的值
+    List<Employee> getEmpsByConditionIf(Employee employee);
 }

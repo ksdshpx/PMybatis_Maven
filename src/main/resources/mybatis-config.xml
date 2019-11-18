@@ -95,12 +95,13 @@
         <mapper resource="EmployeeMapper.xml"/>
         <mapper resource="EmployeeMapperPlus.xml"/>
         <mapper resource="DepartmentMapper.xml"/>
+        <mapper resource="EmployeeMapperDynamicSQL.xml"/>
         <!--
         <mapper class="cn.ksdshpx.mybatis.mapper.EmployeeMapper"/>
         <mapper class="cn.ksdshpx.mybatis.mapper.EmployeeMapperAnnotation"/>
         -->
-        <!--
-        批量注册:映射文件必须与接口同名同包
+        <!--        批量注册:映射文件必须与接口同名同包
+
         <package name="cn.ksdshpx.mybatis.mapper"/>
         -->
     </mappers>

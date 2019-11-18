@@ -2,10 +2,7 @@ package cn.ksdshpx.mybatis.test;
 
 import cn.ksdshpx.mybatis.beans.Department;
 import cn.ksdshpx.mybatis.beans.Employee;
-import cn.ksdshpx.mybatis.mapper.DepartmentMapper;
-import cn.ksdshpx.mybatis.mapper.EmployeeMapper;
-import cn.ksdshpx.mybatis.mapper.EmployeeMapperAnnotation;
-import cn.ksdshpx.mybatis.mapper.EmployeeMapperPlus;
+import cn.ksdshpx.mybatis.mapper.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -224,6 +221,26 @@ public class MyBatisTest {
             EmployeeMapperPlus mapper = sqlSession.getMapper(EmployeeMapperPlus.class);
             Employee employee = mapper.getEmpByIdStep(1);
             System.out.println(employee);
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testDynamicSql() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        //获取的sqlSession不自动提交数据
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
+            //Employee employee = new Employee(1,"hotcat","1","hotcat@atguigu.com");
+            Employee employee = new Employee(1,"hotcat","1",null);
+            List<Employee> emps = mapper.getEmpsByConditionIf(employee);
+            for (Employee emp : emps) {
+                System.out.println(emp);
+            }
         } finally {
             sqlSession.close();
         }
