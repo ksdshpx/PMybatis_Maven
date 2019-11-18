@@ -14,4 +14,6 @@ import java.util.List;
 public interface EmployeeMapperDynamicSQL {
     //携带了哪个字段，查询条件就带上这个字段的值
     List<Employee> getEmpsByConditionIf(Employee employee);
+
+    List<Employee> getEmpsByConditionTrim(Employee employee);
 }

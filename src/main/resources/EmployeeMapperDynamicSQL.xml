@@ -28,9 +28,31 @@
             <if test="email != null and email.trim() != ''">
                 AND email = #{email}
             </if>
+            <!--ognl会进行字符串和数字的转换判断 "0"==0 -->
             <if test="gender == 0 or gender == 1">
                 AND gender = #{gender}
             </if>
         </where>
+    </select>
+
+    <!--public List<Employee> getEmpsByConditionTrim(Employee employee);-->
+    <select id="getEmpsByConditionTrim" resultType="cn.ksdshpx.mybatis.beans.Employee">
+        SELECT *
+        FROM tbl_employee
+        <!--后面多出的and or where标签不能解决-->
+        <trim prefix="where" suffixOverrides="and">
+            <if test="id!=null">
+                id = #{id} AND
+            </if>
+            <if test="lastName != null &amp;&amp; lastName != &quot;&quot;">
+                last_name LIKE #{lastName} AND
+            </if>
+            <if test="email != null and email.trim() != ''">
+                email = #{email} AND
+            </if>
+            <if test="gender == 0 or gender == 1">
+                gender = #{gender}
+            </if>
+        </trim>
     </select>
 </mapper>
