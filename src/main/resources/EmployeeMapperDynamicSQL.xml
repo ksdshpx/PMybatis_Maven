@@ -77,4 +77,23 @@
             </choose>
         </where>
     </select>
+
+    <!--public void updateEmp(Employee employoe);-->
+    <update id="updateEmp">
+        UPDATE tbl_employee
+        <set>
+            <if test="lastName != null">
+                last_name = #{lastName},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="email != null">
+                email = #{email}
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
 </mapper>
