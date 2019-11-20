@@ -236,8 +236,8 @@ public class MyBatisTest {
         try {
             EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
             //测试if/where
-            //Employee employee = new Employee(1,"hotcat","1","hotcat@atguigu.com");
-            Employee employee = new Employee(null,"%t%",null,null);
+            Employee employee = new Employee(1,"hotcat","1","hotcat@atguigu.com");
+            //Employee employee = new Employee(null,"%t%",null,null);
             List<Employee> emps = mapper.getEmpsByConditionIf(employee);
             for (Employee emp : emps) {
                 System.out.println(emp);
@@ -246,6 +246,12 @@ public class MyBatisTest {
             //测试trim
             List<Employee> empsTrim = mapper.getEmpsByConditionTrim(employee);
             for (Employee emp : empsTrim) {
+                System.out.println(emp);
+            }
+            System.out.println("==================");
+            //测试choose
+            List<Employee> empsChoose = mapper.getEmpsByConditionChoose(employee);
+            for (Employee emp : empsChoose) {
                 System.out.println(emp);
             }
         } finally {
