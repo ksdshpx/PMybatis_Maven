@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -237,7 +238,7 @@ public class MyBatisTest {
             EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
             //测试if/where
             //Employee employee = new Employee(1,"hotcat","1","hotcat@atguigu.com");
-            Employee employee = new Employee(1,"sfituser",null,null);
+            Employee employee = new Employee(1, "sfituser", null, null);
             List<Employee> emps = mapper.getEmpsByConditionIf(employee);
             for (Employee emp : emps) {
                 System.out.println(emp);
@@ -257,6 +258,11 @@ public class MyBatisTest {
             //测试set
             System.out.println("=============");
             mapper.updateEmp(employee);
+            System.out.println("=============");
+            List<Employee> empsForeach = mapper.getEmpsByConditionForeach(Arrays.asList(1, 2, 3, 4));
+            for (Employee emp : empsForeach) {
+                System.out.println(emp);
+            }
             sqlSession.commit();
         } finally {
             sqlSession.close();

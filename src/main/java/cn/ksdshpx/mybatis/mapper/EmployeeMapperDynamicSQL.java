@@ -1,6 +1,7 @@
 package cn.ksdshpx.mybatis.mapper;
 
 import cn.ksdshpx.mybatis.beans.Employee;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface EmployeeMapperDynamicSQL {
     List<Employee> getEmpsByConditionChoose(Employee employee);
 
     void updateEmp(Employee employoe);
+
+    List<Employee> getEmpsByConditionForeach(@Param("ids") List<Integer> ids);
 }
