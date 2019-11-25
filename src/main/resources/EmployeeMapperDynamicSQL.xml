@@ -117,4 +117,23 @@
             #{item_id}
         </foreach>
     </select>
+
+    <!--MySQL下批量保存：MySQL支持values(),(),()这种语法，推荐-->
+    <!--public void addEmps(@Param("emps") List<Employee> emps);-->
+    <!--
+    <insert id="addEmps">
+        INSERT INTO tbl_employee(last_name, email, gender, d_id)
+        VALUES
+        <foreach collection="emps" item="emp" separator=",">
+            (#{emp.lastName},#{emp.email},#{emp.gender},#{emp.dept.id})
+        </foreach>
+    </insert>
+    -->
+    <!--这种方式需要MySQL连接属性的支持-->
+    <insert id="addEmps">
+        <foreach collection="emps" item="emp" separator=";">
+            INSERT INTO tbl_employee(last_name, email, gender, d_id)
+            VALUES (#{emp.lastName},#{emp.email},#{emp.gender},#{emp.dept.id})
+        </foreach>
+    </insert>
 </mapper>

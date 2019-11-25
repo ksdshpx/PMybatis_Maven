@@ -11,10 +11,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Create with IntelliJ IDEA
@@ -269,4 +266,22 @@ public class MyBatisTest {
         }
     }
 
+    @Test
+    public void testBatchSave() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        //获取的sqlSession不自动提交数据
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
+            List<Employee> emps = new ArrayList<>();
+            emps.add(new Employee("kraka","1","smith@163.com",new Department(1)));
+            emps.add(new Employee("fider","0","allen@163.com",new Department(1)));
+            mapper.addEmps(emps);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+    }
 }
