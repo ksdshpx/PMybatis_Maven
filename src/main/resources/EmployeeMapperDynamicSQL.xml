@@ -152,16 +152,20 @@
     -->
     <!--List<Employee> getEmpsByInnerParamter(Employee employee);-->
     <select id="getEmpsByInnerParamter" resultType="cn.ksdshpx.mybatis.beans.Employee">
+        <!--
+            bind:可以将OGNL表达式的值绑定到一个变量中，方便后来引用这个变量的值
+        -->
+        <bind name="myLastName" value="'%'+lastName+'%'"/>
         <if test="_databaseId=='mysql'">
             select * from tbl_employee
             <if test="_parameter!=null">
-                where last_name = #{lastName}
+                where last_name like #{myLastName}
             </if>
         </if>
         <if test="_databaseId=='oracle'">
             select * from employees
             <if test="_parameter!=null">
-                where last_name = #{lastName}
+                where last_name like #{lastName}
             </if>
         </if>
     </select>

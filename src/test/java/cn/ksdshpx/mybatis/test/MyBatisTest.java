@@ -293,7 +293,7 @@ public class MyBatisTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
             EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
-            List<Employee> emps = mapper.getEmpsByInnerParamter(new Employee("tom"));
+            List<Employee> emps = mapper.getEmpsByInnerParamter(new Employee("t"));
             emps.forEach(System.out::println);
         } finally {
             sqlSession.close();
