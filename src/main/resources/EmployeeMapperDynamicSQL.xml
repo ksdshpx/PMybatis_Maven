@@ -135,7 +135,9 @@
     -->
     <insert id="addEmps">
         <foreach collection="emps" item="emp" separator=";">
-            INSERT INTO tbl_employee(last_name, email, gender, d_id)
+            INSERT INTO tbl_employee(
+               <include refid="insertColumn"></include>
+            )
             VALUES (#{emp.lastName},#{emp.email},#{emp.gender},#{emp.dept.id})
         </foreach>
     </insert>
@@ -169,4 +171,11 @@
             </if>
         </if>
     </select>
+
+    <!--
+        sql标签:抽取可重用的sql片段，方便后面引用
+    -->
+    <sql id="insertColumn">
+        last_name, email, gender, d_id
+    </sql>
 </mapper>
