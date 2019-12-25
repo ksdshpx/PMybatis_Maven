@@ -25,4 +25,6 @@ public interface EmployeeMapperDynamicSQL {
     List<Employee> getEmpsByConditionForeach(@Param("ids") List<Integer> ids);
 
     void addEmps(@Param("emps") List<Employee> emps);
+
+    List<Employee> getEmpsByInnerParamter(Employee employee);
 }

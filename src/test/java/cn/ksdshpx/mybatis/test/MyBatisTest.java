@@ -284,4 +284,19 @@ public class MyBatisTest {
             sqlSession.close();
         }
     }
+
+    @Test
+    public void testInnerParameter() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
+            List<Employee> emps = mapper.getEmpsByInnerParamter(new Employee("tom"));
+            emps.forEach(System.out::println);
+        } finally {
+            sqlSession.close();
+        }
+    }
 }

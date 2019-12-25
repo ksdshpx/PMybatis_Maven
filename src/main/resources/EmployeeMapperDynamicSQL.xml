@@ -129,11 +129,40 @@
         </foreach>
     </insert>
     -->
-    <!--这种方式需要MySQL连接属性的支持-->
+    <!--
+        这种方式需要MySQL连接属性allowMultiQueries=true的支持
+        这种分号分隔多个sql可以用于其他的批量操作(删除、修改)
+    -->
     <insert id="addEmps">
         <foreach collection="emps" item="emp" separator=";">
             INSERT INTO tbl_employee(last_name, email, gender, d_id)
             VALUES (#{emp.lastName},#{emp.email},#{emp.gender},#{emp.dept.id})
         </foreach>
     </insert>
+
+    <!--
+        两个内置参数
+        不只是方法传递过来的参数可以被用来判断，取值。。。
+        MyBatis还有两个默认的内置参数：
+        _parameter:代表整个参数
+            单个参数:_parameter就是这个参数
+            多个参数:参数会被封装成一个map,_parameter就是代表这个map
+        _databaseId:如果配置了databaseIdProvider标签。
+            _databaseId就是代表当前数据库的别名
+    -->
+    <!--List<Employee> getEmpsByInnerParamter(Employee employee);-->
+    <select id="getEmpsByInnerParamter" resultType="cn.ksdshpx.mybatis.beans.Employee">
+        <if test="_databaseId=='mysql'">
+            select * from tbl_employee
+            <if test="_parameter!=null">
+                where last_name = #{lastName}
+            </if>
+        </if>
+        <if test="_databaseId=='oracle'">
+            select * from employees
+            <if test="_parameter!=null">
+                where last_name = #{lastName}
+            </if>
+        </if>
+    </select>
 </mapper>
