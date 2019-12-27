@@ -302,9 +302,15 @@ public class MyBatisTest {
 
     /*
         缓存：
-        1.一级缓存:(本地缓存)
+        1.一级缓存:(本地缓存),SqlSession级别的缓存,以及缓存是一直开启的,其实就是SqlSession级别的一个Map
             与数据库同一次会话期间查询到的数据会放在本地缓存中
             以后如果需要获取相同的数据，直接从缓存中拿，没必要再去查询数据库
+
+            一级缓存失效情况（没有使用到一级缓存的情况，还需要向数据库发送查询）
+            ①SqlSession不同
+            ②SqlSession相同，查询条件不同（当前一级缓存中还没有这个数据）
+            ③SqlSession相同，两次查询之间执行了增删改操作（这次增删改可能对当前的数据有影响）
+            ④SqlSession相同，手动清除了一级缓存（缓存清空）
         2.二级缓存:(全局缓存)
      */
     @Test
@@ -318,6 +324,34 @@ public class MyBatisTest {
             Employee emp01 = mapper.getEmpById(1);
             System.out.println(emp01);
             System.out.println("处理业务逻辑");
+            Employee emp02 = mapper.getEmpById(1);
+            System.out.println(emp02);
+            System.out.println(emp01 == emp02);
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testFirstLevelCacheInvalid() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            Employee emp01 = mapper.getEmpById(1);
+            System.out.println(emp01);
+            System.out.println("处理业务逻辑");
+            //1.SqlSession不同
+            //SqlSession sqlSession2 = sqlSessionFactory.openSession();
+            //mapper = sqlSession2.getMapper(EmployeeMapper.class);
+            //2.查询条件不同
+            //Employee emp03 = mapper.getEmpById(3);
+            //3.两次查询之间进行了增删改操作
+            //mapper.addEmp(new Employee("aaa"));
+            //4.清除缓存
+            sqlSession.clearCache();
             Employee emp02 = mapper.getEmpById(1);
             System.out.println(emp02);
             System.out.println(emp01 == emp02);
