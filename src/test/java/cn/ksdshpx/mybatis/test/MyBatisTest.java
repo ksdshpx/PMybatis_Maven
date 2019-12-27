@@ -299,4 +299,30 @@ public class MyBatisTest {
             sqlSession.close();
         }
     }
+
+    /*
+        缓存：
+        1.一级缓存:(本地缓存)
+            与数据库同一次会话期间查询到的数据会放在本地缓存中
+            以后如果需要获取相同的数据，直接从缓存中拿，没必要再去查询数据库
+        2.二级缓存:(全局缓存)
+     */
+    @Test
+    public void testFirstLevelCache() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            Employee emp01 = mapper.getEmpById(1);
+            System.out.println(emp01);
+            System.out.println("处理业务逻辑");
+            Employee emp02 = mapper.getEmpById(1);
+            System.out.println(emp02);
+            System.out.println(emp01 == emp02);
+        } finally {
+            sqlSession.close();
+        }
+    }
 }
