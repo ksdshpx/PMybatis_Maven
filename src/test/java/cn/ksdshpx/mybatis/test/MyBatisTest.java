@@ -311,8 +311,15 @@ public class MyBatisTest {
             ②SqlSession相同，查询条件不同（当前一级缓存中还没有这个数据）
             ③SqlSession相同，两次查询之间执行了增删改操作（这次增删改可能对当前的数据有影响）
             ④SqlSession相同，手动清除了一级缓存（缓存清空）
-        2.二级缓存:(全局缓存)
-     */
+        2.二级缓存:(全局缓存),namespace级别的缓存，一个namespace对应一个二级缓存
+            工作机制:
+            ①一个会话，查询一条数据，这个数据会放在当前会话的一级缓存中
+            ②如果会话关闭了，一级缓存中的数据会被保存到二级缓存中，新的会话查询信息就可以参照
+              二级缓存中的内容
+            ③SqlSession===EmployeeMapper==>Employee
+                           DepartmentMapper===>Department
+              不同namespace查出的数据是放在自己对应的缓存(Map)中
+    */
     @Test
     public void testFirstLevelCache() throws IOException {
         String resource = "mybatis-config.xml";
