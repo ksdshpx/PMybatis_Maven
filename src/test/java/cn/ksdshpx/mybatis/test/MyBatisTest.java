@@ -343,6 +343,8 @@ public class MyBatisTest {
                 4)sqlSession.clearCache():只清除当前session的一级缓存，和二级缓存没关系
                 5)localCacheScope:本地缓存作用域（影响一级缓存）,默认为SESSION,当前会话的所有数据保存在一级缓存中
                      如果设置为STATEMENT,相当于是禁用缓存
+
+            缓存的使用顺序:先看二级缓存，再看一级缓存，最后才会查数据库
     */
     @Test
     public void testFirstLevelCache() throws IOException {
