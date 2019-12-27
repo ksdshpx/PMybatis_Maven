@@ -20,6 +20,7 @@
         <setting name="logImpl" value="LOG4J"/>
         <setting name="lazyLoadingEnabled" value="true"/>
         <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="cacheEnabled" value="true"/>
     </settings>
 
     <!--

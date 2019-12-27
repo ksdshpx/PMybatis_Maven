@@ -1,5 +1,6 @@
 package cn.ksdshpx.mybatis.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * Time: 9:30
  * Description:部门实体
  */
-public class Department {
+public class Department implements Serializable {
     private Integer id;
     private String deptName;
     private List<Employee> emps;

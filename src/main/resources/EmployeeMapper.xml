@@ -4,6 +4,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.ksdshpx.mybatis.mapper.EmployeeMapper">
     <!--
+        二级缓存
+        eviction:缓存的回收策略（默认为LRU）
+             LRU – 最近最少使用的：移除最长时间不被使用的对象。
+             FIFO – 先进先出：按对象进入缓存的顺序来移除它们。
+             SOFT – 软引用：移除基于垃圾回收器状态和软引用规则的对象。
+             WEAK – 弱引用：更积极地移除基于垃圾收集器状态和弱引用规则的对象。
+
+        flushInterval:缓存刷新间隔
+             缓存多长时间清空一次，默认是不清空，设置一个毫秒值
+
+        readOnly:缓存是否只读（默认是false）
+            true:只读，MyBatis认为所有从缓存中读取数据的操作都是只读操作，不会修改数据，
+                 MyBatis为了加快获取速度，直接就会将数据在缓存中的引用交给用户。不安全，但是速度快。
+            false:非只读，MyBatis觉得获取的数据可能会被修改，
+                 MyBatis就会使用序列化和反序列化的技术克隆一份新的数据给你,安全，速度慢
+
+        size:缓存存放多少元素
+
+        type:指定自定义缓存的全类名
+             实现Cache接口即可
+    -->
+    <cache eviction="LRU" flushInterval="60000" readOnly="false" size="1024"></cache>
+    <!--
         namespace:名称空间,指定为接口的全类名
         id:唯一标识
         resultType:返回值类型

@@ -319,6 +319,17 @@ public class MyBatisTest {
             ③SqlSession===EmployeeMapper==>Employee
                            DepartmentMapper===>Department
               不同namespace查出的数据是放在自己对应的缓存(Map)中
+
+            效果:数据会从二级缓存中获取
+                查出的数据默认都先放在一级缓存中
+                只有会话提交或者关闭以后一级缓存中的数据才会转移到二级缓存中
+
+            使用:
+                1)开启全局二级缓存配置
+                    <setting name="cacheEnabled" value="true"/>
+                2)去mapper.xml中配置使用二级缓存
+                    <cache></cache>
+                3)我们的POJO需要实现序列化接口
     */
     @Test
     public void testFirstLevelCache() throws IOException {
@@ -364,6 +375,29 @@ public class MyBatisTest {
             System.out.println(emp01 == emp02);
         } finally {
             sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testSecondLevelCache() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        SqlSession sqlSession2 = sqlSessionFactory.openSession();
+        try {
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            Employee emp01 = mapper.getEmpById(1);
+            System.out.println(emp01);
+            sqlSession.close();
+            EmployeeMapper mapper2 = sqlSession2.getMapper(EmployeeMapper.class);
+            //第二次查询是从缓存中拿到的数据，并没有发送新的sql
+            Employee emp02 = mapper2.getEmpById(1);
+            System.out.println(emp02);
+            System.out.println(emp01 == emp02);
+            sqlSession2.close();
+        } finally {
+            //sqlSession.close();
         }
     }
 }

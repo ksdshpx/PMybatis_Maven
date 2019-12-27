@@ -1,5 +1,7 @@
 package cn.ksdshpx.mybatis.beans;
 
+import java.io.Serializable;
+
 /**
  * Create with IntelliJ IDEA
  * Create by peng.xing
@@ -7,7 +9,7 @@ package cn.ksdshpx.mybatis.beans;
  * Time: 14:16
  * Description:Employee实体类
  */
-public class Employee {
+public class Employee implements Serializable {
     private Integer id;
     private String lastName;
     private String gender;
