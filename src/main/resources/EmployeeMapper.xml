@@ -3,6 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.ksdshpx.mybatis.mapper.EmployeeMapper">
+    <!--使用ehcache-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
     <!--
         二级缓存
         eviction:缓存的回收策略（默认为LRU）
@@ -25,7 +27,7 @@
         type:指定自定义缓存的全类名
              实现Cache接口即可
     -->
-    <cache eviction="LRU" flushInterval="60000" readOnly="false" size="1024"></cache>
+    <!--<cache eviction="LRU" flushInterval="60000" readOnly="false" size="1024"></cache>-->
     <!--
         namespace:名称空间,指定为接口的全类名
         id:唯一标识

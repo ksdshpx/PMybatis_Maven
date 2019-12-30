@@ -345,6 +345,12 @@ public class MyBatisTest {
                      如果设置为STATEMENT,相当于是禁用缓存
 
             缓存的使用顺序:先看二级缓存，再看一级缓存，最后才会查数据库
+
+        第三方缓存整合
+            1)导入第三方缓存包即可
+            2)导入与第三方缓存整合的适配包
+            3)在mapper.xml使用自定义缓存
+                <cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
     */
     @Test
     public void testFirstLevelCache() throws IOException {
