@@ -39,6 +39,17 @@ public class MyBatisTest {
      * 每次使用都应该获取新的对象
      * 3）使用sql的唯一标识告诉MyBatis执行哪个sql,sql都是保存在sql映射文件中
      *
+     * MyBatis运行流程
+     * 1.获取SqlSessionFactory对象
+     *      解析配置文件的每一个信息保存在Configuration中，返回包含Configuration
+     *      的DefaultSqlSessionFactory
+     *      注意：MappedStatement:代表增删改查的详细信息
+     *
+     * 2.获取SqlSession对象
+     *      返回一个DefaultSqlSession,包含Executor和Configuration
+     *      这一步会创建Executor对象
+     *
+     * 3.获取接口的代理对象
      * @throws IOException
      */
     @Test
